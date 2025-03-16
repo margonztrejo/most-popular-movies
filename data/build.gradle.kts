@@ -39,6 +39,9 @@ dependencies {
     implementation(libs.material)
 
     implementation(libs.retrofit)
+    implementation(libs.gson)
+    implementation(libs.converter.gson)
+    implementation(project(":domain"))
 
     //Testing
     testImplementation(libs.junit)
