@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "559831824691",
+    "project_id": "margonzt-b2e14",
+    "storage_bucket": "margonzt-b2e14.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:559831824691:android:084ac11e85f73ccadc2646",
+        "android_client_info": {
+          "package_name": "com.margonzt.mostpopularmovies"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8gvp1D_SZZtGN5U2_fin1R5Y91MLiQHQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:559831824691:android:fd8496e15152fa65dc2646",
+        "android_client_info": {
+          "package_name": "com.margonzt.mostpopularmoviesapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8gvp1D_SZZtGN5U2_fin1R5Y91MLiQHQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
