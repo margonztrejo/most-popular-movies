@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kapt)
     alias(libs.plugins.hilt.android)
-    id("com.google.gms.google-services")
+    alias(libs.plugins.google.services)
 }
 
 android {
@@ -62,8 +62,8 @@ dependencies {
     implementation(project(":data"))
     implementation(project(":domain"))
 
-    implementation(platform("com.google.firebase:firebase-bom:33.10.0"))
-    implementation("com.google.firebase:firebase-analytics")
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
 
     //Testing
     testImplementation(libs.junit)
