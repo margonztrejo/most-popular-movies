@@ -10,6 +10,6 @@ class MovieRepositoryImpl @Inject constructor(
     private val apiService: MovieApiService
 ): MovieRepository {
     override suspend fun getPopularMovies(page: Int): List<Movie> {
-        return apiService.getPopularMovies().results.map { it.toDomain() }
+        return apiService.getPopularMovies(page = page).results.map { it.toDomain() }
     }
 }
