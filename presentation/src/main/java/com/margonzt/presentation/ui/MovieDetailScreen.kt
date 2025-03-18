@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.margonzt.domain.model.Movie
+import com.margonzt.presentation.extentions.getGenreString
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,6 +50,8 @@ fun MovieDetailScreen(movie: Movie){
             Text(text = "Release Date: ${movie.releaseDate}", style = MaterialTheme.typography.bodyMedium)
             Spacer(modifier = Modifier.height(8.dp))
             Text(text = movie.overview, style = MaterialTheme.typography.bodyLarge)
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(text = "Genres: ${movie.getGenreString()?:"Unknown"}", style = MaterialTheme.typography.bodyLarge)
         }
     }
 }
