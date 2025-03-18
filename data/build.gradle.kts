@@ -1,7 +1,9 @@
+import org.jetbrains.kotlin.konan.properties.Properties
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.ksp)
+    alias(libs.plugins.kapt)
     alias(libs.plugins.hilt.android)
 }
 
@@ -9,13 +11,17 @@ android {
     namespace = "com.margonzt.data"
     compileSdk = 34
 
+
+    val properties = Properties()
+    properties.load(project.rootProject.file("local.properties").inputStream())
+
     defaultConfig {
         minSdk = 24
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
 
-        buildConfigField("String", "MOVIES_API_KEY", "\"${project.properties["MOVIES_API_KEY"]}\"")
+        buildConfigField("String", "MOVIES_TOKEN", "\"${System.getenv("MOVIES_TOKEN") ?: properties.getProperty("MOVIES_TOKEN")} \"")
     }
 
     buildFeatures{
@@ -52,7 +58,7 @@ dependencies {
 
     //DI
     implementation(libs.hilt.android)
-    ksp(libs.hilt.android.compiler)
+    kapt(libs.hilt.android.compiler)
 
     //Local
     implementation(project(":domain"))
@@ -62,4 +68,8 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+}
+
+kapt {
+    correctErrorTypes = true
 }
