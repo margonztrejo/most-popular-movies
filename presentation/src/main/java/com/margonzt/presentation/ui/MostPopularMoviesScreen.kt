@@ -29,7 +29,8 @@ import com.margonzt.presentation.viewmodel.MostPopularMoviesViewModel
 @Composable
 fun MostPopularMoviesScreen(
     viewModel: MostPopularMoviesViewModel = hiltViewModel(),
-    modifier: Modifier  = Modifier
+    modifier: Modifier  = Modifier,
+    goToDetail: (Movie) -> Unit
 ){
     val movies by viewModel.movies.collectAsState()
     val error by viewModel.error.collectAsState()
