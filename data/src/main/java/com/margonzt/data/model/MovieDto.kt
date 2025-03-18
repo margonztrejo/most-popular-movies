@@ -8,7 +8,7 @@ data class MovieDto(
     @SerializedName("original_title")
     val name: String,
     @SerializedName("poster_path")
-    val posterPath: String,
+    val posterPath: String?,
     @SerializedName("genre_ids")
     val genreIds: List<Int>,
     @SerializedName("overview")

@@ -9,7 +9,7 @@ import javax.inject.Inject
 class MovieRepositoryImpl @Inject constructor(
     private val apiService: MovieApiService
 ): MovieRepository {
-    override suspend fun getPopularMovies(): List<Movie> {
+    override suspend fun getPopularMovies(page: Int): List<Movie> {
         return apiService.getPopularMovies().results.map { it.toDomain() }
     }
 }

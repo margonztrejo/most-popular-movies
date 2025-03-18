@@ -22,16 +22,30 @@ class MostPopularMoviesViewModel @Inject constructor(
     private val _error = MutableStateFlow<String?>(null)
     val error = _error.asStateFlow()
 
+    private var currentPage = 1
+    private var isLoading = false
+    private var isLastPage = false
+
     init {
-        fetchMostPopularMovies()
+        loadMostPopularMovies()
     }
 
-    private fun fetchMostPopularMovies(){
+    fun loadMostPopularMovies(){
+        if(isLoading || isLastPage){
+            return
+        }
+        isLoading = true
+
         viewModelScope.launch {
-            getPopularMoviesUseCase().collect{result ->
+            getPopularMoviesUseCase(currentPage).collect{result ->
                 result.fold(
                     onSuccess = {
-                        _movies.value = it
+                        if(it.isEmpty()){
+                            isLastPage = true
+                        }
+                        _movies.value += it
+                        currentPage ++
+                        isLoading = false
                     },
                     onFailure = {
                         _error.value = it.message
