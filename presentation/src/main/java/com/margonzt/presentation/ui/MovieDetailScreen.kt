@@ -14,11 +14,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.margonzt.domain.model.Movie
+import com.margonzt.presentation.R
 import com.margonzt.presentation.extentions.getGenreString
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -39,17 +41,21 @@ fun MovieDetailScreen(movie: Movie){
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             AsyncImage(
-                model = "https://image.tmdb.org/t/p/w500${movie.posterPath}",
+                model = movie.posterPath,
                 contentDescription = movie.name,
+                placeholder = painterResource(R.drawable.baseline_download_24),
                 modifier = Modifier.height(200.dp),
                 contentScale = ContentScale.Fit
             )
             Spacer(modifier = Modifier.height(16.dp))
-            Text(text = movie.name, fontWeight = FontWeight.Bold, style = MaterialTheme.typography.titleLarge)
+            Text(text = movie.name, fontWeight = FontWeight.Bold, style = MaterialTheme.typography.headlineLarge)
+
             Spacer(modifier = Modifier.height(8.dp))
             Text(text = "Release Date: ${movie.releaseDate}", style = MaterialTheme.typography.bodyMedium)
+
             Spacer(modifier = Modifier.height(8.dp))
             Text(text = movie.overview, style = MaterialTheme.typography.bodyLarge)
+
             Spacer(modifier = Modifier.height(8.dp))
             Text(text = "Genres: ${movie.getGenreString()?:"Unknown"}", style = MaterialTheme.typography.bodyLarge)
         }
@@ -60,6 +66,7 @@ fun MovieDetailScreen(movie: Movie){
 @Composable
 fun MovieDetailPreview(){
     MovieDetailScreen(Movie(
+        id = "12",
         name = "The Phalanx",
         posterPath = "",
         genreIds = listOf(),

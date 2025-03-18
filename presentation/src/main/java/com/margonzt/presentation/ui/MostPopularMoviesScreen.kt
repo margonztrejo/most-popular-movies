@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -23,12 +24,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.margonzt.domain.model.Movie
+import com.margonzt.presentation.R
 import com.margonzt.presentation.viewmodel.MostPopularMoviesViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -40,7 +43,7 @@ fun MostPopularMoviesScreen(
     val movies by viewModel.movies.collectAsState()
     val error by viewModel.error.collectAsState()
 
-    MostPopularMovies(movies, error, goToDetail)
+    MostPopularMovies(movies, error, goToDetail, viewModel::loadMostPopularMovies)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -48,7 +51,8 @@ fun MostPopularMoviesScreen(
 fun MostPopularMovies(
     movies: List<Movie>,
     error: String?,
-    goToDetail: (Movie) -> Unit
+    goToDetail: (Movie) -> Unit,
+    onLoadMore: () -> Unit
 ){
     Scaffold(
         topBar = {
@@ -67,7 +71,7 @@ fun MostPopularMovies(
             } else if (movies.isEmpty()) {
                 CircularProgressIndicator()
             } else {
-                MovieList(movies, goToDetail)
+                MovieList(movies, goToDetail, onLoadMore)
             }
         }
     }
@@ -75,10 +79,25 @@ fun MostPopularMovies(
 
 
 @Composable
-fun MovieList(movies: List<Movie>, gotToDetail: (Movie) -> Unit) {
-    LazyColumn(modifier = Modifier.padding(16.dp)) {
+fun MovieList(
+    movies: List<Movie>,
+    gotToDetail: (Movie) -> Unit,
+    onLoadMore: () -> Unit
+) {
+    LazyColumn(
+        modifier = Modifier.padding(16.dp)
+    ) {
         items(items = movies) { movie ->
             MovieItem(movie, gotToDetail)
+        }
+
+        item {
+            Button(
+                onClick = { onLoadMore() },
+                modifier = Modifier.fillMaxWidth().padding(8.dp)
+            ) {
+                Text("Load More")
+            }
         }
     }
 }
@@ -90,9 +109,10 @@ fun MovieItem(movie: Movie, gotToDetail: (Movie) -> Unit) {
         verticalAlignment = Alignment.CenterVertically
     ){
         AsyncImage(
-            model = "https://image.tmdb.org/t/p/w500${movie.posterPath}",
+            model = movie.posterPath,
             contentDescription = movie.name,
-            modifier = Modifier.height(50.dp),
+            placeholder = painterResource(R.drawable.baseline_download_24),
+            modifier = Modifier.height(56.dp),
             contentScale = ContentScale.Fit
         )
         Column(
@@ -110,9 +130,10 @@ fun MovieItem(movie: Movie, gotToDetail: (Movie) -> Unit) {
 fun MostPopularMoviesScreenPreview(){
     MostPopularMovies(
         movies = listOf(
-            Movie(name ="The Phalanx", posterPath = "", genreIds = listOf(), overview = "Letters from the...", releaseDate = "2025-03-16")
+            Movie(id = "12", name ="The Phalanx", posterPath = "", genreIds = listOf(), overview = "Letters from the...", releaseDate = "2025-03-16")
         ),
         error =null,
-        goToDetail = {}
+        goToDetail = {},
+        onLoadMore = {}
     )
 }
