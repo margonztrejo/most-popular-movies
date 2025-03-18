@@ -17,4 +17,6 @@ object ApiClient {
         .client(client)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
+
+    val movieApiService: MovieApiService = retrofit.create(MovieApiService::class.java)
 }
